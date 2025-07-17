@@ -1,0 +1,231 @@
+================================================
+🗄️ CONFIGURACIÓN DE SUPABASE - GUÍA COMPLETA
+================================================
+
+Esta guía te explica cómo configurar Supabase para que funcione con tu proyecto base.
+
+🔹 PASO 1: CREAR PROYECTO EN SUPABASE
+================================================
+
+1. 🌐 Ve a https://supabase.com
+2. 🔐 Crea una cuenta o inicia sesión
+3. ➕ Click en "New project"
+4. 📝 Completa los datos:
+   - Organization: Elige tu organización
+   - Name: Nombre de tu proyecto (ej: "mi-app-productos")
+   - Database Password: Crea una contraseña segura (¡GUÁRDALA!)
+   - Region: Elige la más cercana a ti
+   - Pricing Plan: Puedes empezar con el plan gratuito
+5. ⏳ Click "Create new project" y espera 2-3 minutos
+
+🔹 PASO 2: OBTENER CREDENCIALES
+================================================
+
+1. 🔧 En tu proyecto, ve a "Settings" (engranaje en la barra lateral)
+2. 📡 Click en "API"
+3. 📋 Copia estas dos claves importantes:
+
+   ✅ Project URL (algo como):
+   https://abcdefghijklmnop.supabase.co
+   
+   ✅ Public anon key (clave larga que empieza con "eyJ"):
+   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+🔹 PASO 3: CONFIGURAR VARIABLES DE ENTORNO
+================================================
+
+1. 📄 Abre el archivo .env en tu proyecto
+2. ✏️ Reemplaza las líneas con tus credenciales reales:
+
+   VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
+   VITE_SUPABASE_ANON_KEY=tu_clave_publica_aqui
+
+3. 💾 Guarda el archivo
+
+🔹 PASO 4: CREAR TABLA DE PRUEBA
+================================================
+
+1. 📊 En Supabase, ve a "Table Editor" (icono de tabla)
+2. ➕ Click "Create a new table"
+3. 📝 Nombre de tabla: "productos"
+4. 🔧 Configura las columnas:
+
+   Columna "id":
+   - Type: int8
+   - Primary: ✅ (marcado)
+   - Auto increment: ✅ (marcado)
+   
+   Columna "nombre":
+   - Type: text
+   - Required: ✅ (marcado)
+   
+   Columna "precio":
+   - Type: numeric
+   - Default value: 0
+   
+   Columna "stock":
+   - Type: int4
+   - Default value: 0
+   
+   Columna "created_at":
+   - Type: timestamptz
+   - Default value: now()
+
+5. 💾 Click "Save"
+
+🔹 PASO 5: CONFIGURAR POLÍTICAS DE SEGURIDAD (RLS)
+================================================
+
+1. 🔒 En "Table Editor", selecciona tu tabla "productos"
+2. 🛡️ Click en "Settings" (engranaje junto al nombre de la tabla)
+3. 🔓 Desactiva "Enable Row Level Security" por ahora (para pruebas)
+4. 💾 Click "Save"
+
+⚠️ IMPORTANTE: En producción, siempre activa RLS y configura políticas apropiadas
+
+🔹 PASO 6: PROBAR LA CONEXIÓN
+================================================
+
+1. 🚀 Inicia tu servidor de desarrollo:
+   npm run dev
+
+2. 🔍 Ve a tu aplicación en el navegador
+3. 🧪 El sistema base ya incluye el cliente de Supabase configurado
+4. ✅ Si no hay errores en la consola, la conexión está funcionando
+
+🔹 PASO 7: INSERTAR DATOS DE PRUEBA
+================================================
+
+Puedes insertar datos de prueba desde Supabase:
+
+1. 📊 Ve a "Table Editor" → "productos"
+2. ➕ Click "Insert row"
+3. 📝 Llena los campos:
+   - nombre: "Producto de prueba"
+   - precio: 29.99
+   - stock: 10
+4. 💾 Click "Save"
+
+🔹 EJEMPLO DE CÓDIGO PARA USAR SUPABASE
+================================================
+
+Ya tienes el cliente configurado en src/supabaseClient.js
+
+Para obtener datos:
+```javascript
+import { supabase } from './supabaseClient'
+
+// Obtener todos los productos
+const { data, error } = await supabase
+  .from('productos')
+  .select('*')
+
+if (error) {
+  console.error('Error:', error)
+} else {
+  console.log('Productos:', data)
+}
+```
+
+Para insertar datos:
+```javascript
+import { supabase } from './supabaseClient'
+
+// Insertar nuevo producto
+const { data, error } = await supabase
+  .from('productos')
+  .insert([
+    { nombre: 'Nuevo Producto', precio: 15.99, stock: 5 }
+  ])
+
+if (error) {
+  console.error('Error:', error)
+} else {
+  console.log('Producto creado:', data)
+}
+```
+
+🔹 ESTRUCTURA RECOMENDADA PARA APPS DE STOCK
+================================================
+
+Tablas sugeridas:
+
+1. 📦 productos
+   - id, nombre, precio, stock, descripcion, categoria, created_at
+
+2. 🛒 ventas
+   - id, producto_id, cantidad, precio_unitario, total, created_at
+
+3. 👥 usuarios (si usas autenticación)
+   - Supabase maneja esto automáticamente
+
+4. 📊 categorias
+   - id, nombre, descripcion
+
+🔹 COMANDOS ÚTILES DE SUPABASE
+================================================
+
+Ver todos los productos:
+```javascript
+const { data } = await supabase
+  .from('productos')
+  .select('*')
+```
+
+Buscar productos:
+```javascript
+const { data } = await supabase
+  .from('productos')
+  .select('*')
+  .ilike('nombre', '%busqueda%')
+```
+
+Actualizar stock:
+```javascript
+const { data } = await supabase
+  .from('productos')
+  .update({ stock: nuevoStock })
+  .eq('id', productoId)
+```
+
+Eliminar producto:
+```javascript
+const { data } = await supabase
+  .from('productos')
+  .delete()
+  .eq('id', productoId)
+```
+
+🔹 SOLUCIÓN DE PROBLEMAS
+================================================
+
+❌ Error de conexión:
+- Verifica que las credenciales en .env sean correctas
+- Asegúrate de que el proyecto de Supabase esté activo
+- Revisa que no haya espacios extra en las claves
+
+❌ Error de permisos:
+- Desactiva RLS temporalmente para pruebas
+- Verifica que las políticas de seguridad estén bien configuradas
+
+❌ Error de tabla no encontrada:
+- Verifica que la tabla exista en Supabase
+- Revisa que el nombre de la tabla sea exacto (case-sensitive)
+
+🔹 PRÓXIMOS PASOS
+================================================
+
+1. ✅ Crear las tablas que necesites
+2. 🔐 Configurar autenticación (opcional)
+3. 🛡️ Configurar políticas de seguridad (RLS)
+4. 📱 Desarrollar tu aplicación específica
+5. 🚀 Hacer deploy en Vercel
+
+🔹 RECURSOS ADICIONALES
+================================================
+
+📚 Documentación oficial: https://supabase.com/docs
+🎥 Tutoriales: https://supabase.com/docs/guides/getting-started
+💬 Comunidad: https://github.com/supabase/supabase/discussions
+
+¡Tu base de datos está lista para usar! 🎉

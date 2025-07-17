@@ -1,0 +1,107 @@
+========================================
+📋 INSTRUCCIONES PARA COPIAR SISTEMA BASE
+========================================
+
+Si copiaste esta carpeta manualmente a otra ubicación, sigue estos pasos:
+
+🔹 PASOS OBLIGATORIOS:
+========================================
+
+1. 📦 INSTALAR DEPENDENCIAS
+   Abre terminal/CMD en la nueva carpeta y ejecuta:
+   
+   npm install
+   
+   (Esto puede tomar unos minutos)
+
+2. 🔧 CONFIGURAR VARIABLES DE ENTORNO
+   Edita el archivo .env y actualiza:
+   
+   VITE_SUPABASE_URL=tu_url_de_supabase_aqui
+   VITE_SUPABASE_ANON_KEY=tu_clave_anonima_aqui
+
+3. 🚀 PROBAR QUE FUNCIONA
+   Ejecuta el servidor de desarrollo:
+   
+   npm run dev
+   
+   Debe abrir en http://localhost:5173
+
+🔹 PASOS OPCIONALES:
+========================================
+
+4. 📝 CAMBIAR NOMBRE DEL PROYECTO
+   Edita package.json y cambia:
+   "name": "mi-app-stock"
+   por:
+   "name": "tu-nuevo-proyecto"
+
+5. 🧹 LIMPIAR HISTORIAL DE GIT
+   Si quieres un repositorio nuevo:
+   
+   rmdir /s .git
+   git init
+   git add .
+   git commit -m "Initial commit"
+
+6. 🎨 PERSONALIZAR CONTENIDO
+   Edita src/App.jsx y reemplaza el contenido de demostración
+   con tu aplicación específica.
+
+🔹 ESTRUCTURA DEL PROYECTO:
+========================================
+
+src/
+├── components/     ← Componentes reutilizables
+├── pages/         ← Páginas principales
+├── hooks/         ← Hooks personalizados (ej: useAuth.js)
+├── context/       ← Contextos de React
+├── assets/        ← Archivos estáticos
+├── App.jsx        ← Componente principal
+├── main.jsx       ← Punto de entrada con rutas
+├── index.css      ← Estilos Tailwind CSS
+└── supabaseClient.js ← Cliente de Supabase
+
+🔹 TECNOLOGÍAS INCLUIDAS:
+========================================
+
+✅ React 19+ con Vite
+✅ Tailwind CSS v4 (completamente configurado)
+✅ React Router DOM (para navegación)
+✅ Supabase (backend y autenticación)
+✅ Hook de autenticación (useAuth.js)
+✅ Configuración para Vercel deployment
+
+🔹 COMANDOS ÚTILES:
+========================================
+
+npm run dev     ← Iniciar servidor de desarrollo
+npm run build   ← Crear build de producción
+npm run preview ← Previsualizar build de producción
+
+🔹 PRÓXIMOS PASOS:
+========================================
+
+1. Configura tu proyecto en Supabase.com
+2. Copia las credenciales al archivo .env
+3. Modifica src/App.jsx para tu aplicación
+4. ¡Comienza a desarrollar!
+
+🔹 SCRIPT AUTOMÁTICO:
+========================================
+
+Si prefieres automatizar este proceso, usa el archivo:
+crear-nuevo-proyecto.bat
+
+Este script hace todos los pasos automáticamente.
+
+🔹 AYUDA:
+========================================
+
+Si tienes problemas:
+1. Verifica que Node.js esté instalado
+2. Verifica que npm funcione
+3. Asegúrate de tener conexión a internet
+4. Verifica que las credenciales de Supabase sean correctas
+
+¡Feliz desarrollo! 🚀

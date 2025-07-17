@@ -1,0 +1,167 @@
+===============================================
+🔐 CONFIGURACIÓN DE GOOGLE OAUTH - GUÍA COMPLETA
+===============================================
+
+Esta guía te explica paso a paso cómo configurar Google OAuth para tu proyecto.
+
+🔹 PASO 1: CREAR PROYECTO EN GOOGLE CLOUD CONSOLE
+===============================================
+
+1. 🌐 Ve a https://console.cloud.google.com/
+2. 🔐 Inicia sesión con tu cuenta de Google
+3. ➕ Crea un nuevo proyecto:
+   - Click en "Select a project" (arriba izquierda)
+   - Click "New Project"
+   - Nombre: "Sistema de Notas" (o el que prefieras)
+   - Click "Create"
+4. ⏳ Espera a que se cree el proyecto
+
+🔹 PASO 2: HABILITAR GOOGLE+ API
+===============================================
+
+1. 📡 Ve a "APIs & Services" → "Library"
+2. 🔍 Busca "Google+ API"
+3. ✅ Click en "Google+ API" → "Enable"
+4. ⏳ Espera a que se habilite
+
+🔹 PASO 3: CONFIGURAR PANTALLA DE CONSENTIMIENTO
+===============================================
+
+1. 📱 Ve a "APIs & Services" → "OAuth consent screen"
+2. 🔧 Selecciona "External" → "Create"
+3. 📝 Completa los campos requeridos:
+   - App name: "Sistema de Notas"
+   - User support email: tu@email.com
+   - Developer contact information: tu@email.com
+4. 💾 Click "Save and Continue"
+5. ⏭️ Skip "Scopes" → "Save and Continue"
+6. ⏭️ Skip "Test users" → "Save and Continue"
+7. ✅ Click "Back to Dashboard"
+
+🔹 PASO 4: CREAR CREDENCIALES OAUTH
+===============================================
+
+1. 🔑 Ve a "APIs & Services" → "Credentials"
+2. ➕ Click "Create Credentials" → "OAuth 2.0 Client IDs"
+3. 🖥️ Application type: "Web application"
+4. 📝 Name: "Sistema de Notas Web"
+5. 🌐 Authorized JavaScript origins:
+   - http://localhost:5173 (desarrollo)
+   - https://tu-proyecto.vercel.app (producción)
+6. 🔄 Authorized redirect URIs:
+   - https://tu-proyecto.supabase.co/auth/v1/callback
+7. 💾 Click "Create"
+8. 📋 Copia el Client ID que aparece
+
+🔹 PASO 5: CONFIGURAR EN SUPABASE
+===============================================
+
+1. 🗄️ Ve a tu proyecto en Supabase
+2. ⚙️ Ve a "Authentication" → "Providers"
+3. 🔧 Busca "Google" y habilítalo
+4. 📝 Completa los campos:
+   - Client ID: el que copiaste de Google Cloud
+   - Client Secret: el que copiaste de Google Cloud
+5. 💾 Click "Save"
+
+🔹 PASO 6: CONFIGURAR URLS EN SUPABASE
+===============================================
+
+1. ⚙️ Ve a "Settings" → "Authentication"
+2. 📝 Configura las URLs:
+   
+   Site URL:
+   - Desarrollo: http://localhost:5173
+   - Producción: https://tu-proyecto.vercel.app
+   
+   Redirect URLs:
+   - http://localhost:5173/auth/callback
+   - https://tu-proyecto.vercel.app/auth/callback
+   
+3. 💾 Click "Save"
+
+🔹 PASO 7: VARIABLES DE ENTORNO
+===============================================
+
+En tu archivo .env local:
+```
+VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
+VITE_SUPABASE_ANON_KEY=tu_clave_aqui
+```
+
+En Vercel (para producción):
+- Ve a tu proyecto en Vercel
+- Settings → Environment Variables
+- Agrega las mismas variables
+
+🔹 PASO 8: PROBAR LA CONFIGURACIÓN
+===============================================
+
+1. 🚀 Inicia tu servidor local:
+   ```bash
+   npm run dev
+   ```
+
+2. 🔍 Ve a http://localhost:5173/login
+
+3. 🧪 Haz click en "Continuar con Google"
+
+4. ✅ Deberías ver la pantalla de consentimiento de Google
+
+5. 📧 Después de autorizar, deberías ser redirigido al dashboard
+
+🔹 TROUBLESHOOTING COMÚN
+===============================================
+
+❌ Error: "redirect_uri_mismatch"
+- Verifica que las URLs autorizadas coincidan exactamente
+- Revisa que no haya espacios extra
+- Asegúrate de incluir http:// o https://
+
+❌ Error: "invalid_client"
+- Verifica que el Client ID sea correcto
+- Revisa que el Client Secret sea correcto
+- Asegúrate de que el proyecto esté activo
+
+❌ Error: "access_denied"
+- Revisa la configuración de la pantalla de consentimiento
+- Verifica que el email esté en "Test users" si está en modo testing
+
+❌ Error: "invalid_request"
+- Verifica que la configuración en Supabase sea correcta
+- Revisa que las redirect URIs estén bien configuradas
+
+🔹 CONFIGURACIÓN PARA PRODUCCIÓN
+===============================================
+
+Cuando hagas deployment a Vercel:
+
+1. 🌐 Actualiza las URLs en Google Cloud Console:
+   - JavaScript origins: https://tu-proyecto.vercel.app
+   - Redirect URIs: https://tu-proyecto.supabase.co/auth/v1/callback
+
+2. 🗄️ Actualiza las URLs en Supabase:
+   - Site URL: https://tu-proyecto.vercel.app
+   - Redirect URLs: https://tu-proyecto.vercel.app/auth/callback
+
+3. 🔧 Configura variables de entorno en Vercel:
+   - VITE_SUPABASE_URL
+   - VITE_SUPABASE_ANON_KEY
+
+🔹 MEJORES PRÁCTICAS
+===============================================
+
+✅ Usa diferentes proyectos para desarrollo y producción
+✅ Mantén las credenciales seguras y no las subas a Git
+✅ Revisa los scopes solicitados (solo los necesarios)
+✅ Configura correctamente la pantalla de consentimiento
+✅ Prueba en diferentes navegadores y dispositivos
+
+🔹 RECURSOS ADICIONALES
+===============================================
+
+📚 Documentación Google OAuth: https://developers.google.com/identity/protocols/oauth2
+📚 Documentación Supabase Auth: https://supabase.com/docs/guides/auth
+💬 Soporte Supabase: https://github.com/supabase/supabase/discussions
+
+¡Tu autenticación con Google está lista! 🎉

@@ -1,0 +1,106 @@
+===============================================
+🔐 CONFIGURACIÓN GOOGLE OAUTH - PASO A PASO ESPECÍFICO
+===============================================
+
+¡Perfecto! Veo que ya estás en Google Cloud Console. Sigue estos pasos exactos:
+
+🔹 PASO 1: CREAR CREDENCIALES OAUTH
+===============================================
+
+1. 🔵 **Click en "Crear credenciales"** (botón azul arriba)
+2. 📝 **Selecciona "ID de cliente de OAuth 2.0"**
+
+🔹 PASO 2: CONFIGURAR PANTALLA DE CONSENTIMIENTO (SI ES NECESARIO)
+===============================================
+
+Si te pide configurar la pantalla de consentimiento primero:
+
+1. 🔧 **Selecciona "Externo"** → Click "Crear"
+2. 📝 **Completa los campos obligatorios:**
+   - Nombre de la app: "Sistema de Notas"
+   - Email de asistencia: tu@email.com
+   - Email de contacto: tu@email.com
+3. 💾 **Click "Guardar y continuar"**
+4. ⏭️ **Omite "Alcances"** → "Guardar y continuar"
+5. ⏭️ **Omite "Usuarios de prueba"** → "Guardar y continuar"
+
+🔹 PASO 3: CREAR EL CLIENTE OAUTH
+===============================================
+
+1. 🖥️ **Tipo de aplicación:** "Aplicación web"
+2. 📝 **Nombre:** "Sistema de Notas Web"
+3. 🌐 **Orígenes de JavaScript autorizados:**
+   - `http://localhost:5173`
+   - `https://localhost:5173`
+   - `http://localhost:3000` (por si acaso)
+
+4. 🔄 **URIs de redirección autorizados:**
+   - `https://nqzapnnczyodllvhoold.supabase.co/auth/v1/callback`
+
+5. 💾 **Click "Crear"**
+
+🔹 PASO 4: OBTENER LAS CREDENCIALES
+===============================================
+
+Después de crear, Google te mostrará:
+
+📋 **Client ID** (cópialo):
+- Algo como: `123456789-abcdef.apps.googleusercontent.com`
+
+📋 **Client Secret** (cópialo):
+- Algo como: `GOCSPX-abcdef123456789`
+
+🔹 PASO 5: CONFIGURAR EN SUPABASE
+===============================================
+
+1. 🗄️ **Ve a tu proyecto Supabase**
+2. ⚙️ **Authentication → Providers**
+3. 🔧 **Busca "Google" y actívalo**
+4. 📝 **Pega las credenciales:**
+   - Client ID: (el que copiaste de Google)
+   - Client Secret: (el que copiaste de Google)
+5. 💾 **Click "Save"**
+
+🔹 PASO 6: CONFIGURAR URLs EN SUPABASE
+===============================================
+
+1. ⚙️ **Settings → Authentication**
+2. 📝 **Site URL:** `http://localhost:5173`
+3. 📝 **Redirect URLs:** `http://localhost:5173/auth/callback`
+4. 💾 **Click "Save"**
+
+🔹 PASO 7: PROBAR LA CONFIGURACIÓN
+===============================================
+
+1. 🚀 **Inicia tu servidor:** `npm run dev`
+2. 🔍 **Ve a:** `http://localhost:5173/login`
+3. 🧪 **Click "Continuar con Google"**
+4. ✅ **Deberías ver la ventana de Google OAuth**
+
+🔹 ERRORES COMUNES Y SOLUCIONES
+===============================================
+
+❌ **Error "redirect_uri_mismatch":**
+- Verifica que la URI sea exactamente: `https://nqzapnnczyodllvhoold.supabase.co/auth/v1/callback`
+
+❌ **Error "invalid_client":**
+- Revisa que Client ID y Secret sean correctos en Supabase
+
+❌ **Error "access_denied":**
+- Asegúrate de que la pantalla de consentimiento esté configurada
+
+🔹 DATOS ESPECÍFICOS PARA TU PROYECTO
+===============================================
+
+**Tu Supabase URL:** `https://nqzapnnczyodllvhoold.supabase.co`
+**Callback URL:** `https://nqzapnnczyodllvhoold.supabase.co/auth/v1/callback`
+
+🔹 PRÓXIMO PASO
+===============================================
+
+Una vez que tengas las credenciales de Google:
+1. Configúralas en Supabase
+2. Prueba el login con Google
+3. ¡Listo! Ya tienes ambos métodos de autenticación funcionando
+
+¿Necesitas ayuda con algún paso específico?
