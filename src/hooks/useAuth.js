@@ -139,6 +139,9 @@ export function useAuth() {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
 
+      // Redirigir después del logout
+      window.location.href = '/login'
+
       return {
         success: true,
         message: 'Sesión cerrada correctamente'

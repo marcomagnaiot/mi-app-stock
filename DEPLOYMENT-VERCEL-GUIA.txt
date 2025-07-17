@@ -1,0 +1,148 @@
+===============================================
+🚀 DEPLOYMENT A VERCEL - GUÍA PASO A PASO
+===============================================
+
+¡Excelente! Tu código ya está en GitHub: https://github.com/marcomagnaiot/mi-app-stock
+
+🔹 PASO 1: CONECTAR VERCEL CON GITHUB
+===============================================
+
+1. 🌐 Ve a https://vercel.com (ya tienes la cuenta abierta)
+2. ➕ **Click "New Project"**
+3. 📂 **Import Git Repository:**
+   - Busca: `marcomagnaiot/mi-app-stock`
+   - Click "Import"
+
+🔹 PASO 2: CONFIGURACIÓN AUTOMÁTICA
+===============================================
+
+Vercel detectará automáticamente:
+- ✅ **Framework:** Vite
+- ✅ **Build Command:** `npm run build`
+- ✅ **Output Directory:** `dist`
+- ✅ **Install Command:** `npm install`
+
+**No cambies nada, la configuración está perfecta.**
+
+🔹 PASO 3: AGREGAR VARIABLES DE ENTORNO
+===============================================
+
+**ANTES de hacer deploy, click "Environment Variables":**
+
+Agrega estas 2 variables:
+
+```
+Name: VITE_SUPABASE_URL
+Value: https://nqzapnnczyodllvhoold.supabase.co
+
+Name: VITE_SUPABASE_ANON_KEY
+Value: [tu clave anónima de Supabase]
+```
+
+**¿Dónde encuentro la clave anónima?**
+- Ve a Supabase → Tu proyecto → Settings → API
+- Copia la "anon public" key
+
+🔹 PASO 4: HACER DEPLOY
+===============================================
+
+1. 🚀 **Click "Deploy"**
+2. ⏳ **Espera 2-3 minutos** (Vercel hará el build)
+3. ✅ **Vercel te dará una URL** como: `https://mi-app-stock.vercel.app`
+
+🔹 PASO 5: ACTUALIZAR URLS EN SUPABASE
+===============================================
+
+**Una vez que tengas la URL de Vercel:**
+
+1. 🗄️ **Ve a Supabase → Settings → Authentication**
+2. 📝 **Actualiza:**
+   - Site URL: `https://mi-app-stock.vercel.app`
+   - Redirect URLs: `https://mi-app-stock.vercel.app/auth/callback`
+3. 💾 **Click "Save"**
+
+🔹 PASO 6: ACTUALIZAR GOOGLE OAUTH
+===============================================
+
+**Ve a Google Cloud Console → Credentials:**
+
+1. 🔧 **Edita tu OAuth 2.0 Client ID**
+2. 🌐 **Authorized JavaScript origins:**
+   - Mantén: `http://localhost:5173`
+   - Agrega: `https://mi-app-stock.vercel.app`
+3. 🔄 **Authorized redirect URIs:**
+   - Mantén: `https://nqzapnnczyodllvhoold.supabase.co/auth/v1/callback`
+   - (Este no cambia)
+4. 💾 **Click "Save"**
+
+🔹 PASO 7: PROBAR LA APLICACIÓN
+===============================================
+
+1. 🔍 **Ve a tu URL de Vercel**
+2. 🧪 **Prueba todas las funcionalidades:**
+   - ✅ Login con email/password
+   - ✅ Registro con email/password
+   - ✅ Login con Google
+   - ✅ Crear/editar/eliminar notas
+   - ✅ Búsqueda de notas
+   - ✅ Logout
+
+🔹 TROUBLESHOOTING
+===============================================
+
+❌ **Si no carga la página:**
+- Verifica que las variables de entorno estén correctas
+- Revisa los logs en Vercel Dashboard
+
+❌ **Si Google OAuth no funciona:**
+- Verifica que agregaste la URL de Vercel a Google Cloud Console
+- Asegúrate de que no haya espacios extra
+
+❌ **Si la autenticación no funciona:**
+- Verifica que actualizaste las URLs en Supabase
+- Revisa que la Site URL coincida exactamente
+
+🔹 DEPLOYMENT AUTOMÁTICO
+===============================================
+
+**¡Buena noticia!** Ahora cada vez que hagas cambios:
+
+1. 📝 **Edita tu código localmente**
+2. 🔄 **Haz commit y push:**
+   ```bash
+   git add .
+   git commit -m "Nuevas mejoras"
+   git push origin master
+   ```
+3. 🚀 **Vercel hace deploy automáticamente**
+
+🔹 PRÓXIMOS PASOS
+===============================================
+
+Una vez que funcione todo:
+- 🎉 **¡Tu aplicación está online!**
+- 📱 **Funciona en móviles y tablets**
+- 🌍 **Accesible desde cualquier lugar**
+- 🔄 **Deploy automático con cada cambio**
+
+🔹 COMANDOS ÚTILES
+===============================================
+
+```bash
+# Para futuros cambios
+git add .
+git commit -m "Descripción del cambio"
+git push origin master
+
+# Para ver el status
+git status
+
+# Para ver el historial
+git log --oneline
+```
+
+===============================================
+¡LISTO! Tu aplicación está lista para ser desplegada 🚀
+===============================================
+
+**Siguiente paso:** Ve a Vercel y sigue los pasos 1-7 de esta guía.

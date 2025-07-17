@@ -11,24 +11,47 @@ import './index.css'
 function AuthCallback() {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
-  const [authProcessed, setAuthProcessed] = React.useState(false)
+  const [showMessage, setShowMessage] = React.useState('Procesando autenticación...')
   
   React.useEffect(() => {
-    // Esperamos un poco para asegurar que la sesión se procese
-    const timer = setTimeout(() => {
-      if (!loading) {
-        if (user) {
-          console.log('Usuario autenticado, redirigiendo al dashboard')
+    let mounted = true
+    
+    const processAuth = async () => {
+      // Esperamos que termine la carga inicial
+      if (loading) return
+      
+      // Esperamos un poco más para asegurar que la sesión esté completamente procesada
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
+      if (!mounted) return
+      
+      if (user) {
+        console.log('Usuario autenticado, redirigiendo al dashboard')
+        setShowMessage('¡Autenticación exitosa! Redirigiendo...')
+        
+        // Esperamos un poco más antes de redirigir
+        await new Promise(resolve => setTimeout(resolve, 500))
+        
+        if (mounted) {
           navigate('/dashboard', { replace: true })
-        } else {
-          console.log('No hay usuario, redirigiendo al login')
+        }
+      } else {
+        console.log('No hay usuario, redirigiendo al login')
+        setShowMessage('Error de autenticación, redirigiendo...')
+        
+        await new Promise(resolve => setTimeout(resolve, 500))
+        
+        if (mounted) {
           navigate('/login', { replace: true })
         }
-        setAuthProcessed(true)
       }
-    }, 1000) // Damos 1 segundo para que se procese la autenticación
-
-    return () => clearTimeout(timer)
+    }
+    
+    processAuth()
+    
+    return () => {
+      mounted = false
+    }
   }, [user, loading, navigate])
 
   return (
@@ -38,9 +61,7 @@ function AuthCallback() {
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        <p className="text-gray-600">
-          {loading ? 'Procesando autenticación...' : 'Redirigiendo...'}
-        </p>
+        <p className="text-gray-600">{showMessage}</p>
       </div>
     </div>
   )
