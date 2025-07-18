@@ -6,6 +6,7 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { DashboardPage } from './pages/DashboardPage'
+import { EstadisticasPage } from './pages/EstadisticasPage'
 import './index.css'
 
 function AuthCallback() {
@@ -121,6 +122,14 @@ function AppRouter() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/estadisticas" 
+        element={
+          <ProtectedRoute>
+            <EstadisticasPage />
           </ProtectedRoute>
         } 
       />

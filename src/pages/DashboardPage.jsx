@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { NotaCard } from '../components/notas/NotaCard'
 import { CrearEditarNota } from '../components/notas/CrearEditarNota'
+import { Link } from 'react-router-dom'
 
 export function DashboardPage() {
   const { user, signOut, getUserData } = useAuth()
@@ -128,6 +129,17 @@ export function DashboardPage() {
                   </span>
                 )}
               </div>
+              <Link to="/estadisticas">
+                <Button
+                  variant="outline"
+                  size="sm"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  Estadísticas
+                </Button>
+              </Link>
               <Button
                 variant="outline"
                 size="sm"
